@@ -13,7 +13,7 @@ $PSQL \
     -X \
     -h $DB_HOST \
     -U $DB_USER \
-    -c "select \"id\", \"isInitialization\" from services" \
+    -c "select \"id\", \"isInitialization\" from services where \"isInitialization\" = false" \
     --single-transaction \
     --set AUTOCOMMIT=off \
     --set ON_ERROR_STOP=on \
