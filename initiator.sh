@@ -3,12 +3,6 @@
 set -e
 set -u
 
-if [ $# -ne 5 ]
-  then
-    printf "All command arguments were not passed!\nExample: ./initiator.sh user 0.2.3.4 domain.com ns1.serv.com ns2.serv.com\n"
-    exit 1;
-fi
-
 PSQL=/usr/bin/psql
 DB_HOST=localhost
 
