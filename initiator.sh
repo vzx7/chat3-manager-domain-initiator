@@ -26,14 +26,23 @@ $PSQL \
        printf "\n#######################################################\nDomain $domain created.\n">>success.log
        else 
        echo "Could not create domain: $domain.">>error.log
-       continue;
+       continue
     fi
+
+    # Add DNS note
+    if v-add-dns-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" $HESTIA_DOMAIN_IP $HESTIA_DOMAIN_NS_SERVER_1 $HESTIA_DOMAIN_NS_SERVER_2; then
+       echo "Domain $domain created!">>success.log
+       else 
+       echo "Could not create DNS for domain: $domain">>error.log
+       continue
+    fi
+
     # Add ssl for domain
     if v-add-letsencrypt-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" "www.$domain.$HESTIA_DOMAIN_BASE"; then
        echo "Successfully added ssl certificate for domain $domain.">>success.log
        else 
        echo "Could not create ssl cert for domain:$domain.">>error.log
-       continue;
+       continue
     fi
     # Add forse ssl
     if v-add-web-domain-ssl-force $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE"; then
