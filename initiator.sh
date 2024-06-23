@@ -39,23 +39,22 @@ $PSQL \
        else 
        echo "Could not create ssl forse for domain:$domain.">>error.log
     fi
+
+    if rm -R /home/$HESTIA_DOMAIN_USER/web/$domain.$HESTIA_DOMAIN_BASE/public_html; then
+        ln -s /home/$HESTIA_DOMAIN_USER/web/$domain.$HESTIA_DOMAIN_BASE/public_html /home/$HESTIA_DOMAIN_USER/web/$HESTIA_ROOT_APP/public_html
+        echo "Successfully added a link to the root directory for the domain $domain.">>success.log
+        else
+        echo "Failed to create a link to the application root directory for domain: $domain.">>error.log
+    fi
     # update isInitialization for domain
-    if $PSQL \
+    $PSQL \
         -X \
         -h $DB_HOST \
         -U $PG_USER \
         -w \
         -c "update services set \"isInitialization\" = true where \"id\" = $id" \
         --quiet \
-        -d $PG_BD; then
-        if rm -R /home/$HESTIA_DOMAIN_USER/web/$domain.$HESTIA_DOMAIN_BASE/public_html; then
-            ln -s /home/$HESTIA_DOMAIN_USER/web/$domain.$HESTIA_DOMAIN_BASE/public_html /home/$HESTIA_DOMAIN_USER/web/$HESTIA_ROOT_APP/public_html
-            else
-            echo "Failed to create a link to the application root directory for domain: $domain.">>error.log
-        fi
-        else
-        echo "Failed to update state for domain: $domain.">>error.log
-    fi
+        -d $PG_BD
 done
 
 exit;
