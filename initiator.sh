@@ -43,7 +43,7 @@ $PSQL \
        exit 1;
     fi
     # Add forse ssl
-    if v-add-web-domain-ssl-force $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" then
+    if v-add-web-domain-ssl-force $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE"; then
        echo "Domain $domain created!">>success.log
        else 
        echo "Could not create ssl forse for domain:$domain">>error.log
