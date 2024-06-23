@@ -2,7 +2,8 @@
 
 set -e
 set -u
-
+# for cron
+source /root/.bashrc
 PSQL=/usr/bin/psql
 DB_HOST=localhost
 
@@ -23,8 +24,8 @@ $PSQL \
 | while read id domain; do
     # Add a domain using the hestia CLI API
     if v-add-web-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" $HESTIA_DOMAIN_IP yes "www.$domain.$HESTIA_DOMAIN_BASE"; then
-       printf "\n#######################################################\nDomain \"$domain\" created.\n">>success.log
-       else 
+       printf "\n#######################################################\n$(date)\nDomain \"$domain\" created.\n">>success.log
+       else
        echo "Could not create domain: \"$domain\".">>error.log
        continue
     fi
