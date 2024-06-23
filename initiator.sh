@@ -23,28 +23,28 @@ $PSQL \
 | while read id domain; do
     # Add a domain using the hestia CLI API
     if v-add-web-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" $HESTIA_DOMAIN_IP yes "www.$domain.$HESTIA_DOMAIN_BASE"; then
-       echo "Domain $domain created!">>success.log
+       printf "\n#######################################################\nDomain $domain created">>success.log
        else 
        echo "Could not create domain: $domain">>error.log
        exit 1;
     fi
     # Add DNS note
     if v-add-dns-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" $HESTIA_DOMAIN_IP $HESTIA_DOMAIN_NS_SERVER_1 $HESTIA_DOMAIN_NS_SERVER_2; then
-       echo "Domain $domain created!">>success.log
+       echo "Successfully added DNS records for the domain $domain">>success.log
        else 
        echo "Could not create DNS for domain: $domain">>error.log
        exit 1;
     fi
     # Add ssl for domain
     if v-add-letsencrypt-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" "www.$domain.$HESTIA_DOMAIN_BASE"; then
-       echo "Domain $domain created!">>success.log
+       echo "Successfully added ssl certificate for domain $domain">>success.log
        else 
        echo "Could not create ssl cert for domain:$domain">>error.log
        exit 1;
     fi
     # Add forse ssl
     if v-add-web-domain-ssl-force $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE"; then
-       echo "Domain $domain created!">>success.log
+       echo "Successfully added mandatory redirect to ssl for the domain $domain">>success.log
        else 
        echo "Could not create ssl forse for domain:$domain">>error.log
        exit 1;
