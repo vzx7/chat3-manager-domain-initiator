@@ -26,18 +26,21 @@ $PSQL \
        printf "\n#######################################################\nDomain $domain created.\n">>success.log
        else 
        echo "Could not create domain: $domain.">>error.log
+       continue;
     fi
     # Add ssl for domain
     if v-add-letsencrypt-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" "www.$domain.$HESTIA_DOMAIN_BASE"; then
        echo "Successfully added ssl certificate for domain $domain.">>success.log
        else 
        echo "Could not create ssl cert for domain:$domain.">>error.log
+       continue;
     fi
     # Add forse ssl
     if v-add-web-domain-ssl-force $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE"; then
        echo "Successfully added mandatory redirect to ssl for the domain $domain.">>success.log
        else 
        echo "Could not create ssl forse for domain:$domain.">>error.log
+       continue;
     fi
 
     if rm -R /home/$HESTIA_DOMAIN_USER/web/$domain.$HESTIA_DOMAIN_BASE/public_html; then
@@ -45,6 +48,7 @@ $PSQL \
         echo "Successfully added a link to the root directory for the domain $domain.">>success.log
         else
         echo "Failed to create a link to the application root directory for domain: $domain.">>error.log
+        continue;
     fi
     # update isInitialization for domain
     $PSQL \
