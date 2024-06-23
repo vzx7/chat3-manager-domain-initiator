@@ -16,9 +16,20 @@ cd ~
 echo "hostname:port:database:username:password" > .pgpass
 chmod 600 .pgpass
 ```
+Add environment variables to the root user's .bashrc:
+```bash
+# ENV FOR chat3 scripts
+export PG_USER=your_pg_user
+export PG_BD=your_pg_bd
+export HESTIA_DOMAIN_USER=user
+export HESTIA_DOMAIN_IP=111.111.111.111
+export HESTIA_DOMAIN_BASE=example.com
+export HESTIA_DOMAIN_NS_SERVER_1=ns1.example.ru 
+export HESTIA_DOMAIN_NS_SERVER_2=ns2.example.ru
+```
 ## Run
 ```sh
 git clone git@github.com:vzx7/chat3-manager-domain-initiator.git
 cd chat3-manager-domain-initiator
-./initiator.sh user 0.2.3.4 domain.com ns1.serv.com ns2.serv.com
+./initiator.sh
 ```
