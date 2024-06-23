@@ -53,7 +53,7 @@ $PSQL \
     fi
 
     if rm -R /home/$HESTIA_DOMAIN_USER/web/$domain.$HESTIA_DOMAIN_BASE/public_html; then
-        ln -s /home/$HESTIA_DOMAIN_USER/web/$domain.$HESTIA_DOMAIN_BASE/public_html /home/$HESTIA_DOMAIN_USER/web/$HESTIA_ROOT_APP/public_html
+        ln -s /home/$HESTIA_DOMAIN_USER/web/$HESTIA_ROOT_APP/public_html /home/$HESTIA_DOMAIN_USER/web/$domain.$HESTIA_DOMAIN_BASE/public_html
         echo "Successfully added a link to the root directory for the domain $domain.">>success.log
         else
         echo "Failed to create a link to the application root directory for domain: $domain.">>error.log
