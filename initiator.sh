@@ -31,7 +31,7 @@ $PSQL \
 
     # Add DNS note
     if v-add-dns-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" $HESTIA_DOMAIN_IP $HESTIA_DOMAIN_NS_SERVER_1 $HESTIA_DOMAIN_NS_SERVER_2; then
-       echo "Domain $domain created!">>success.log
+       echo "DNS record was successfully added for the domain $domain.">>success.log
        else 
        echo "Could not create DNS for domain: $domain">>error.log
        continue
@@ -67,7 +67,8 @@ $PSQL \
         -w \
         -c "update services set \"isInitialization\" = true where \"id\" = $id" \
         --quiet \
-        -d $PG_BD
+        -d $PG_BD;
+    printf "The domain: $domain has been successfully created, all data has been updated.\n#######################################################\n"
 done
 
 exit;
