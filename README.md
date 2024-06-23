@@ -26,6 +26,9 @@ export HESTIA_DOMAIN_IP=111.111.111.111
 export HESTIA_DOMAIN_BASE=example.com
 export HESTIA_DOMAIN_NS_SERVER_1=ns1.example.ru 
 export HESTIA_DOMAIN_NS_SERVER_2=ns2.example.ru
+# Attention! In my case, all subdomains created by this script look into the same root directory, where the root application is located... In your case it may be different.
+export HESTIA_ROOT_APP=example.ru
+
 ```
 ## Run
 ```sh
