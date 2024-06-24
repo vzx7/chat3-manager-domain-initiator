@@ -3,7 +3,7 @@
 set -e
 set -u
 # for cron
-source /root/.bashrc
+source /root/.env
 PSQL=/usr/bin/psql
 DB_HOST=localhost
 
@@ -23,7 +23,7 @@ $PSQL \
     -d $PG_BD \
 | while read id domain; do
     # Add a domain using the hestia CLI API
-    if v-add-web-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" $HESTIA_DOMAIN_IP yes "www.$domain.$HESTIA_DOMAIN_BASE"; then
+    if  /usr/local/hestia/bin/v-add-web-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" $HESTIA_DOMAIN_IP yes "www.$domain.$HESTIA_DOMAIN_BASE"; then
        printf "\n#######################################################\n$(date)\nDomain \"$domain\" created.\n">>success.log
        else
        echo "Could not create domain: \"$domain\".">>error.log
@@ -31,7 +31,7 @@ $PSQL \
     fi
 
     # Add DNS note
-    if v-add-dns-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" $HESTIA_DOMAIN_IP $HESTIA_DOMAIN_NS_SERVER_1 $HESTIA_DOMAIN_NS_SERVER_2; then
+    if  /usr/local/hestia/bin/v-add-dns-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" $HESTIA_DOMAIN_IP $HESTIA_DOMAIN_NS_SERVER_1 $HESTIA_DOMAIN_NS_SERVER_2; then
        echo "DNS record was successfully added for the domain \"$domain\".">>success.log
        else 
        echo "Could not create DNS for domain: \"$domain\"">>error.log
@@ -39,14 +39,14 @@ $PSQL \
     fi
 
     # Add ssl for domain
-    if v-add-letsencrypt-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" "www.$domain.$HESTIA_DOMAIN_BASE"; then
+    if  /usr/local/hestia/bin/v-add-letsencrypt-domain $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE" "www.$domain.$HESTIA_DOMAIN_BASE"; then
        echo "Successfully added ssl certificate for domain \"$domain\".">>success.log
        else 
        echo "Could not create ssl cert for domain: \"$domain\".">>error.log
        continue
     fi
     # Add forse ssl
-    if v-add-web-domain-ssl-force $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE"; then
+    if  /usr/local/hestia/bin/v-add-web-domain-ssl-force $HESTIA_DOMAIN_USER "$domain.$HESTIA_DOMAIN_BASE"; then
        echo "Successfully added mandatory redirect to ssl for the domain \"$domain\".">>success.log
        else 
        echo "Could not create ssl forse for domain: \"$domain\".">>error.log
