@@ -1,0 +1,10 @@
+[Unit]
+Description=Service for running domain initialization script using Hestia CLI API
+Wants=domainInitiator.timer
+
+[Service]
+Type=oneshot
+ExecStart=/root/chat3-manager-domain-initiator/initiator.sh
+
+[Install]
+WantedBy=multi-user.target

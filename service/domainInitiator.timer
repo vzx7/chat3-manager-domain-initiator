@@ -1,0 +1,11 @@
+[Unit]
+Description=Timer for running the domain initialization script using the Hestia CLI API
+Requires=domainInitiator.service
+
+[Timer]
+Unit=domainInitiator.service
+OnCalendar=*:0/5
+
+[Install]
+WantedBy=timers.target
+
