@@ -28,6 +28,8 @@ export HESTIA_DOMAIN_NS_SERVER_1=ns1.example.ru
 export HESTIA_DOMAIN_NS_SERVER_2=ns2.example.ru
 # Attention! In my case, all subdomains created by this script look into the same root directory, where the root application is located... In your case it may be different.
 export HESTIA_ROOT_APP=example.ru
+export PSQL=/usr/bin/psql
+export DB_HOST=localhost
 ```
 Attention! Please note that this is not an ini format.
 The .env file will be used for the "source" statement, so all variables must be added via export!

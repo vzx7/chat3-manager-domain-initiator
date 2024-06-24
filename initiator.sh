@@ -1,12 +1,8 @@
 #!/bin/bash
-
 set -e
 set -u
-
+# GET ENV VARS
 source /root/.env
-PSQL=/usr/bin/psql
-DB_HOST=localhost
-SUCCESS_LOG=
 
 $PSQL \
     -X \
