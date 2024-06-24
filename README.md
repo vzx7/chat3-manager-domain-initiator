@@ -16,7 +16,7 @@ cd ~
 echo "hostname:port:database:username:password" > .pgpass
 chmod 600 .pgpass
 ```
-Add environment variables to the root user's .bashrc:
+Add environment variables to file ./.env:
 ```bash
 # ENV FOR chat3 scripts
 export PG_USER=your_pg_user
@@ -28,8 +28,9 @@ export HESTIA_DOMAIN_NS_SERVER_1=ns1.example.ru
 export HESTIA_DOMAIN_NS_SERVER_2=ns2.example.ru
 # Attention! In my case, all subdomains created by this script look into the same root directory, where the root application is located... In your case it may be different.
 export HESTIA_ROOT_APP=example.ru
-
 ```
+Attention! Please note that this is not an ini format.
+The .env file will be used for the "source" statement, so all variables must be added via export!
 ## Run
 ```sh
 git clone git@github.com:vzx7/chat3-manager-domain-initiator.git
